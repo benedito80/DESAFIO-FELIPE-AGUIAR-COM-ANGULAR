@@ -1,0 +1,135 @@
+<div class="container">
+    <button style="padding: 2px 50px" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary float-right mb-3"
+        (click)="resetUser()">
+        Adicionar usuário
+    </button>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col" style="width:60%;">USER DETAILS</th>
+                <th scope="col" style="width:40%;">
+                    <div style="display:flex;justify-content: space-between;">
+                        <div>ROLE</div>
+                        <div>DEPARTMENT</div>
+                        <div>SUBMITS TO</div>
+                    </div>
+                </th>
+            </tr>
+
+        </thead>
+        <tbody *ngFor="let usuario of usuarios">
+            <tr>
+                <td style="width:60%;">
+                    <div style="display: flex;">
+                        <img style="border-radius: 50%;margin-right: 20px;" src={{usuario.post.url}} width="80px"
+                            height="80px" />
+                        <div style="display: block;">
+
+
+                            <div style="color:#007BFF;font-weight: bold;">{{ usuario.nome }}</div>
+
+
+                            <div style="display:flex;align-items: center;">
+                                <img class="mr-1" src="../../../../assets/email2.png" alt="" width="20px" height="20px">
+                                <div style="font-size:12px">{{ usuario.email }}</div>
+                            </div>
+
+                            <div style="display:flex;align-items: center;">
+                                <img class="mr-1" src="../../../../assets/git2.png" alt="" width="20px" height="20px">
+                                <div style="color:#007BFF; font-size:14px"> <a href="{{usuario.git}}" target="blank">{{
+                                        usuario.git }}</a>
+                                </div>
+                            </div>
+                            <div style="display:flex;align-items: center;margin-left: 8%;">
+                                <div style="color:#000; font-size:14px;margin-top: 5px;"> {{ usuario.data |
+                                    date:"dd/MM/yyyy
+                                    hh:mm a"}}
+                                </div>
+                                <img class="ml-1" src="../../../../assets/data.png" alt="" width="20px" height="20px">
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+                <td style="width:40%;">
+                    <div style="display: flex; justify-content: space-around;">
+                        <button class="btn btn-primary mt-4" style="padding: 0 70px;" data-toggle="modal"
+                            data-target="#exampleModal" (click)="editUser(usuario)">Editar</button>
+                        <button class="btn btn-danger mt-4" style="padding: 0 70px;"
+                            (click)="deleteUser(usuario)">Excluir</button>
+                    </div>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document" style="min-width:60%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cadastrar Usuário</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="add-form" (ngSubmit)="f.form.valid && saveUsers(f)" #f="ngForm" novalidate
+                    class="form-filmes">
+                    <div class="form-row">
+
+                        <div class="col-md-12 mb-1">
+                            <label for="nome">Nome Completo</label>
+                            <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="user.nome" />
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-12 mb-1">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" [(ngModel)]="user.email" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-12 mb-1">
+                            <label for="git">Git</label>
+                            <input type="text" class="form-control" id="git" name="git" [(ngModel)]="user.git" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-12 mb-1">
+                            <form>
+                                <div class="form-group" style="display: flex;">
+                                    <input type="file" (change)="postImagem($event)" class="form-control-file mt-2"
+                                        id="post">
+                                    <div *ngIf="img">
+                                        <img (click)="deletePost()"
+                                            style="border-radius: 50%;margin-right: 20px; cursor: pointer;" src={{img}}
+                                            alt="imagem" width="80px" height="80px" />
+                                        <p style="color: red;font-size: 12px;margin-bottom: 0;">Editar Imagem</p>
+                                    </div>
+
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
